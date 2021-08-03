@@ -13,13 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK
-      uses: actions/setup-java@v2
+    - name: “Use Node.js 14”
+      uses: actions/setup-node@v1
       with:
-        java-version: '8'
-        distribution: 'adopt'
-    - name: Build with npm
-      run: npm install
+        node-version: 14
+    - name: “Install CLI tools”
+      run: npm install -g @angular/cli
+    - name: “Install application”
+      run: |
+        npm install
+        cd frontend
+        npm install 
     - name: WhiteSource Unified Agent Scan
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -50,4 +54,3 @@ jobs:
         echo 'multimodule.txt contents'
         cat multimodule.txt
         java -jar xModuleAnalyzer.jar -xModulePath multimodule.txt -fsaJarPath ./wss-unified-agent.jar -c ./eua.config -aggregateModules true
-
