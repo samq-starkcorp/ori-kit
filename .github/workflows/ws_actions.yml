@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ls --all --json --long --only=prod
+          npm dedupe
           npm install
       - name: WhiteSource Unified Agent Scan
         env:
